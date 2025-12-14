@@ -5,10 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fake_store.data.RetrofitClient
+import com.example.fake_store.data.toDomainProduct
 import com.example.fake_store.databinding.FragmentCatalogBinding
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.ui.fragments.adapter.ProductsAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CatalogFragment : Fragment() {
     private var _binding: FragmentCatalogBinding? = null
@@ -27,32 +34,13 @@ class CatalogFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-        //Тестовый лист
-        val test = listOf<ProductModel>(
-            ProductModel(
-                category = "te",
-                description = "comprehensam",
-                id = 3496,
-                image = "singulis",
-                price = 2.3,
-                title = "inimicus"
-            ), ProductModel(
-                category = "dicant",
-                description = "senectus",
-                id = 9525,
-                image = "sonet",
-                price = 6.7,
-                title = "proin"
-            ), ProductModel(
-                category = "mei",
-                description = "signiferumque",
-                id = 8903,
-                image = "reque",
-                price = 10.11,
-                title = "sed"
-            )
-        )
-        adapter.updateList(test)
+        lifecycleScope.launch {
+            val test2 = withContext(Dispatchers.IO) {
+                RetrofitClient.api.getProducts().map { it.toDomainProduct() }
+            }
+            adapter.updateList(test2)
+        }
+
     }
 
     override fun onDestroyView() {

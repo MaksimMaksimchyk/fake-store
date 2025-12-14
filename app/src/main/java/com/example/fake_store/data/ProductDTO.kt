@@ -1,5 +1,8 @@
 package com.example.fake_store.data
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class ProductDTO(
     val category: String,
     val description: String,

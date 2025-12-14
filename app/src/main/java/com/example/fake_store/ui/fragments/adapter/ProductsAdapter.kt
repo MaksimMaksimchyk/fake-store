@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.fake_store.databinding.ItemProductBinding
 import com.example.fake_store.domain.ProductModel
 
@@ -37,6 +38,7 @@ class ProductsAdapter() :
         fun bind(product: ProductModel) {
             binding.productTitle.text = product.title
             binding.productPrice.text = "$" + product.price.toString()
+            Glide.with(binding.productImage).load(product.image).into(binding.productImage)
         }
 
 
