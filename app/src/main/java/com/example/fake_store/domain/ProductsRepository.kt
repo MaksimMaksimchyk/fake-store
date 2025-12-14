@@ -1,6 +1,7 @@
 package com.example.fake_store.domain
 
 interface ProductsRepository {
-    fun getProducts(): List<ProductModel>
-    fun addToCart(product: ProductModel)
+    suspend fun getProducts(): List<ProductModel>
+    suspend fun addToCart(product: ProductModel)
+    suspend fun getProduct(id: Int): ProductModel
 }

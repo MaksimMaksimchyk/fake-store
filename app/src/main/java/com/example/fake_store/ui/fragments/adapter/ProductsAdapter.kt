@@ -41,7 +41,6 @@ class ProductsAdapter() :
             Glide.with(binding.productImage).load(product.image).into(binding.productImage)
         }
 
-
     }
 
     fun updateList(newProducts: List<ProductModel>) {
