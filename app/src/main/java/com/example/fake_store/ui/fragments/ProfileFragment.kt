@@ -1,4 +1,4 @@
-package com.example.fake_store
+package com.example.fake_store.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
