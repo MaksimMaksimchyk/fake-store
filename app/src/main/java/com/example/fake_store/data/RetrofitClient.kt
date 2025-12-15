@@ -22,4 +22,8 @@ object RetrofitClient {
             .build()
             .create(FakeStoreApi::class.java)
     }
+
+    var currentCartDTO = CartDTO(0,0, emptyList() )
+
+
 }

@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.fake_store.databinding.ItemProductBinding
 import com.example.fake_store.domain.ProductModel
 
-class ProductsAdapter() :
+class ProductsAdapter(private val onProductClick: (ProductModel) -> Unit) :
     RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
     private var products = listOf<ProductModel>()
 
@@ -39,6 +39,9 @@ class ProductsAdapter() :
             binding.productTitle.text = product.title
             binding.productPrice.text = "$" + product.price.toString()
             Glide.with(binding.productImage).load(product.image).into(binding.productImage)
+            binding.productCard.setOnClickListener {
+                onProductClick(product)
+            }
         }
 
     }

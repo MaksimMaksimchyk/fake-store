@@ -8,11 +8,16 @@ class ProductsRepositoryImpl() : ProductsRepository {
         return RetrofitClient.api.getProducts().map { it.toDomainProduct() }
     }
 
-    override suspend fun addToCart(product: ProductModel) {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun getProduct(id: Int): ProductModel {
         return RetrofitClient.api.getProduct(id).toDomainProduct()
     }
+
+    override suspend fun createCart(cartDTO: CartDTO) {
+        val result = RetrofitClient.api.createCart(cartDTO)
+        RetrofitClient.currentCartDTO = result.copy()
+    }
+
+    override fun getProductsFromCart(): List<ProductModel> =
+        RetrofitClient.currentCartDTO.products.map { it.toDomainProduct() }
+
 }

@@ -10,7 +10,7 @@
         android:label="fragment_catalog"
         tools:layout="@layout/fragment_catalog" >
         <action
-            android:id="@+id/action_catalogFragment2_to_productDetailsFragment"
+            android:id="@+id/action_catalogFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>
     <fragment
@@ -22,7 +22,11 @@
         android:id="@+id/cartFragment"
         android:name="com.example.fake_store.ui.fragments.CartFragment"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cartFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.fake_store.ui.fragments.ProfileFragment"

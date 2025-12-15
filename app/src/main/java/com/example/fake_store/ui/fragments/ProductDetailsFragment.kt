@@ -5,12 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.bumptech.glide.Glide
 import com.example.fake_store.databinding.FragmentProductDetailsBinding
+import com.example.fake_store.ui.MainActivityViewModel
+import kotlinx.coroutines.launch
+import kotlin.getValue
 
 class ProductDetailsFragment : Fragment() {
 
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: MainActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,11 +33,35 @@ class ProductDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupListeners()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupObservers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.currentDetailsProduct.collect { currentProduct ->
+                    Glide.with(binding.productImage).load(currentProduct.image)
+                        .into(binding.productImage)
+                    binding.productTitle.text = currentProduct.title
+                    binding.productPrice.text = "$" + currentProduct.price.toString()
+                    binding.productDescription.text = currentProduct.description
+                }
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.addToCartButton.setOnClickListener {
+            viewModel.addToCart(viewModel.currentDetailsProduct.value)
+            Toast.makeText(requireContext(), "Успешно добавлено в корзину!", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
 }
