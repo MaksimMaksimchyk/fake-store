@@ -2,8 +2,10 @@ package com.example.fake_store.data
 
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.domain.ProductsRepository
+import javax.inject.Inject
 
-class ProductsRepositoryImpl() : ProductsRepository {
+class ProductsRepositoryImpl @Inject constructor() : ProductsRepository {
+
     override suspend fun getProducts(): List<ProductModel> {
         return RetrofitClient.api.getProducts().map { it.toDomainProduct() }
     }

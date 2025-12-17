@@ -8,13 +8,16 @@ import com.example.fake_store.data.RetrofitClient
 import com.example.fake_store.data.toDtoProduct
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.domain.ProductsInteractor
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MainActivityViewModel : ViewModel() {
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(val productsInteractor: ProductsInteractor) : ViewModel() {
 
     private val _allProducts = MutableStateFlow<List<ProductModel>>(emptyList())
     val allProducts = _allProducts.asStateFlow()
@@ -32,11 +35,6 @@ class MainActivityViewModel : ViewModel() {
         )
     )
     val currentDetailsProduct = _currentDetailsProduct.asStateFlow()
-
-    private val productsInteractor: ProductsInteractor by lazy {
-        val repository = ProductsRepositoryImpl()
-        ProductsInteractor(repository)
-    }
 
     init {
         loadProducts()

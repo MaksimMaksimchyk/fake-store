@@ -16,9 +16,10 @@ import com.example.fake_store.databinding.FragmentCatalogBinding
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.ui.MainActivityViewModel
 import com.example.fake_store.ui.fragments.adapter.ProductsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
-
+@AndroidEntryPoint
 class CatalogFragment : Fragment() {
     private var _binding: FragmentCatalogBinding? = null
     private val binding get() = _binding!!

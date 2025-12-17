@@ -3,8 +3,9 @@ package com.example.fake_store.domain
 import com.example.fake_store.data.CartDTO
 import com.example.fake_store.data.RetrofitClient
 import com.example.fake_store.data.toDomainProduct
+import javax.inject.Inject
 
-class ProductsInteractor(private val productsRepository: ProductsRepository) {
+class ProductsInteractor @Inject constructor(private val productsRepository: ProductsRepository) {
 
     suspend fun getProducts(): List<ProductModel> = productsRepository.getProducts()
 
