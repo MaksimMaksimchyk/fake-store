@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fake_store.data.CartDTO
 import com.example.fake_store.data.ProductsRepositoryImpl
-import com.example.fake_store.data.RetrofitClient
 import com.example.fake_store.data.toDtoProduct
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.domain.ProductsInteractor

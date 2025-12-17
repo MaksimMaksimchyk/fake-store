@@ -1,7 +1,6 @@
 package com.example.fake_store.domain
 
 import com.example.fake_store.data.CartDTO
-import com.example.fake_store.data.RetrofitClient
 import com.example.fake_store.data.toDomainProduct
 import javax.inject.Inject
 

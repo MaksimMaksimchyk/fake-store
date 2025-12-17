@@ -13,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fake_store.R
-import com.example.fake_store.data.RetrofitClient
 import com.example.fake_store.databinding.FragmentCartBinding
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.ui.MainActivityViewModel
@@ -21,6 +20,7 @@ import com.example.fake_store.ui.fragments.adapter.ProductsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
+
 @AndroidEntryPoint
 class CartFragment : Fragment() {
 
@@ -67,13 +67,6 @@ class CartFragment : Fragment() {
         }
     }
 
-    private fun onProductClick(product: ProductModel) {
-        Toast.makeText(
-            requireContext(),
-            "Id корзины: ${RetrofitClient.currentCartDTO.id}, id пользователя: ${RetrofitClient.currentCartDTO.userid}",
-            Toast.LENGTH_SHORT
-        )
-            .show()
-    }
+    private fun onProductClick(product: ProductModel) {}
 
 }
