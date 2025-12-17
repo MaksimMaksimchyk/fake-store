@@ -72,4 +72,6 @@ dependencies {
     //Hilt
     implementation("com.google.dagger:hilt-android:2.57.1")
     ksp("com.google.dagger:hilt-android-compiler:2.57.1")
+    //Logging
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }
