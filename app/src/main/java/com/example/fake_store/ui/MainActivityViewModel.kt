@@ -1,10 +1,11 @@
 package com.example.fake_store.ui
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fake_store.data.CartDTO
-import com.example.fake_store.data.ProductsRepositoryImpl
-import com.example.fake_store.data.toDtoProduct
+import com.example.fake_store.data.storage.AuthManager
+import com.example.fake_store.data.network.CartDTO
+import com.example.fake_store.data.network.toDtoProduct
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.domain.ProductsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(val productsInteractor: ProductsInteractor) : ViewModel() {
+class MainActivityViewModel @Inject constructor(val productsInteractor: ProductsInteractor) :
+    ViewModel() {
 
     private val _allProducts = MutableStateFlow<List<ProductModel>>(emptyList())
     val allProducts = _allProducts.asStateFlow()
@@ -35,9 +37,12 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
     )
     val currentDetailsProduct = _currentDetailsProduct.asStateFlow()
 
+    private val _currentToken = MutableStateFlow<String>("")
+    val currentToken = _currentToken.asStateFlow()
+
+
     init {
         loadProducts()
-
     }
 
     fun loadProducts() {
@@ -55,10 +60,24 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
     fun addToCart(product: ProductModel) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                productsInteractor.createCart(CartDTO(666, 666, listOf(product.toDtoProduct())))
+                productsInteractor.createCart(CartDTO(0, 0, listOf(product.toDtoProduct())))
             }
             _cartProducts.value.addAll(productsInteractor.getProductsFromCart())
         }
     }
+
+    fun createToken(context: Context, username: String, password: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _currentToken.value = productsInteractor.createToken(username, password)
+            }
+            AuthManager.saveToken(context, _currentToken.value)
+        }
+    }
+
+    fun changeToken(token: String) {
+        _currentToken.value = token
+    }
+
 
 }

@@ -1,6 +1,6 @@
 package com.example.fake_store.hilt
 
-import com.example.fake_store.data.FakeStoreApi
+import com.example.fake_store.data.network.FakeStoreApi
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module

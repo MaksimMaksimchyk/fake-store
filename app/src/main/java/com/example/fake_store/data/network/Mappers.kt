@@ -1,4 +1,4 @@
-package com.example.fake_store.data
+package com.example.fake_store.data.network
 
 import com.example.fake_store.domain.ProductModel
 

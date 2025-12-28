@@ -1,7 +1,6 @@
 package com.example.fake_store.domain
 
-import com.example.fake_store.data.CartDTO
-import com.example.fake_store.data.toDomainProduct
+import com.example.fake_store.data.network.CartDTO
 import javax.inject.Inject
 
 class ProductsInteractor @Inject constructor(private val productsRepository: ProductsRepository) {
@@ -15,4 +14,8 @@ class ProductsInteractor @Inject constructor(private val productsRepository: Pro
     }
 
     fun getProductsFromCart(): List<ProductModel> = productsRepository.getProductsFromCart()
+
+    suspend fun createToken(username: String, password: String): String {
+        return productsRepository.createToken(username, password)
+    }
 }

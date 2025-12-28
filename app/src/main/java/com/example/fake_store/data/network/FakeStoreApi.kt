@@ -1,4 +1,4 @@
-package com.example.fake_store.data
+package com.example.fake_store.data.network
 
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,5 +14,8 @@ interface FakeStoreApi {
 
     @POST("carts")
     suspend fun createCart(@Body cartDTO: CartDTO): CartDTO
+
+    @POST("auth/login")
+    suspend fun createToken(@Body user: UserDTO): TokenDTO
 
 }
