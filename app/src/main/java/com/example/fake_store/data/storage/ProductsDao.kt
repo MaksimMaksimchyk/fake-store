@@ -7,6 +7,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
+
 @Dao
 interface ProductsDao {
 
@@ -29,7 +31,6 @@ interface ProductsDao {
         } else {
             insertCartItem(CartItem(productId = product.productId, quantity = 1))
         }
-        Log.d("CART", "Product ID: ${product.productId}, Current quantity in DB: ${existing?.quantity}")
     }
 
     @Transaction
@@ -41,5 +42,17 @@ interface ProductsDao {
 
     @Query("DELETE FROM cart_items WHERE productId = :id")
     suspend fun deleteCartItemById(id: Int)
+
+    @Query("SELECT COUNT(*) FROM products")
+    suspend fun getProductsCount(): Int
+
+    @Query("SELECT * FROM products")
+    suspend fun getAllProducts(): List<Product>
+
+    @Query("SELECT * FROM products WHERE productId = :id")
+    suspend fun getProductById(id: Int): Product
+
+    @Update
+    suspend fun updateProduct(product: Product)
 
 }

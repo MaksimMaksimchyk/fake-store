@@ -10,4 +10,5 @@ interface ProductsRepository {
     suspend fun createToken(username: String, password: String): String
     suspend fun addProductToCart(product: ProductModel)
     suspend fun removeFromCart(productId: Int)
+    suspend fun updateProductPrice(product: ProductModel, newPrice: Double)
 }

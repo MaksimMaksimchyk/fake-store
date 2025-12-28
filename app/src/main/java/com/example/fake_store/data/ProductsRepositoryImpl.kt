@@ -6,6 +6,7 @@ import com.example.fake_store.data.network.CartDTO
 import com.example.fake_store.data.network.FakeStoreApi
 import com.example.fake_store.data.network.UserDTO
 import com.example.fake_store.data.network.toDomainProduct
+import com.example.fake_store.data.network.toDtoProduct
 import kotlinx.coroutines.Dispatchers
 import com.example.fake_store.data.storage.CartItem
 import com.example.fake_store.data.storage.ProductsDao
@@ -23,11 +24,18 @@ class ProductsRepositoryImpl @Inject constructor(
 ) : ProductsRepository {
 
     override suspend fun getProducts(): List<ProductModel> {
-        return api.getProducts().map { it.toDomainProduct() }
+        if (dao.getProductsCount() == 0) {
+            val remoteProducts = api.getProducts().map { it.toDomainProduct() }
+            remoteProducts.forEach { dao.insertProduct(it.toEntity()) }
+            return remoteProducts
+        } else {
+            val localProducts = dao.getAllProducts().map { it.toDomain() }
+            return localProducts
+        }
     }
 
     override suspend fun getProduct(id: Int): ProductModel {
-        return api.getProduct(id).toDomainProduct()
+        return dao.getProductById(id).toDomain()
     }
 
     override suspend fun createToken(username: String, password: String): String {
@@ -52,4 +60,17 @@ class ProductsRepositoryImpl @Inject constructor(
     override suspend fun removeFromCart(productId: Int) {
         dao.deleteCartItemById(productId)
     }
+
+    override suspend fun updateProductPrice(
+        product: ProductModel,
+        newPrice: Double
+    ) {
+        withContext(Dispatchers.IO) {
+            val updatedProduct = product.copy(price = newPrice)
+            api.updateProduct(updatedProduct.id, updatedProduct.toDtoProduct())
+            dao.updateProduct(updatedProduct.toEntity())
+        }
+    }
+
+
 }

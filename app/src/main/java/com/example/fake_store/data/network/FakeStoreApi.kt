@@ -4,6 +4,7 @@ import androidx.room.Delete
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface FakeStoreApi {
@@ -19,6 +20,11 @@ interface FakeStoreApi {
     @POST("auth/login")
     suspend fun createToken(@Body user: UserDTO): TokenDTO
 
+    @PUT("products/{id}")
+    suspend fun updateProduct(
+        @Path("id") id: Int,
+        @Body product: ProductDTO
+    ): ProductDTO
 
 
 }

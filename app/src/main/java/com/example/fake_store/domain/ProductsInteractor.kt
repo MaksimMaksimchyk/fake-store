@@ -28,4 +28,8 @@ class ProductsInteractor @Inject constructor(private val productsRepository: Pro
     suspend fun createToken(username: String, password: String): String {
         return productsRepository.createToken(username, password)
     }
+
+    suspend fun updateProductPrice(product: ProductModel, newPrice: Double) {
+        productsRepository.updateProductPrice(product, newPrice)
+    }
 }

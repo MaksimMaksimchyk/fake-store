@@ -18,6 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.getValue
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
@@ -64,6 +66,13 @@ class ProductDetailsFragment : Fragment() {
         binding.addToCartButton.setOnClickListener {
             viewModel.addToCart(viewModel.currentDetailsProduct.value)
             Toast.makeText(requireContext(), "Успешно добавлено в корзину!", Toast.LENGTH_SHORT)
+                .show()
+        }
+        binding.randomizePrice.setOnClickListener {
+            val newPrice = Random.nextInt(1, 1000) / 1.0
+            binding.productPrice.text = "$" + newPrice.toString()
+            viewModel.changeProductPrice(newPrice)
+            Toast.makeText(requireContext(), "Цена изменена", Toast.LENGTH_SHORT)
                 .show()
         }
     }

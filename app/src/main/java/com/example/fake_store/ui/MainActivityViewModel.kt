@@ -11,6 +11,7 @@ import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.domain.ProductsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -66,6 +67,14 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
 
     fun changeCurrentDetailsProduct(product: ProductModel) {
         _currentDetailsProduct.value = product
+    }
+
+    fun changeProductPrice(newPrice: Double) {
+        viewModelScope.launch {
+            productsInteractor.updateProductPrice(currentDetailsProduct.value, newPrice)
+            loadProducts()
+            loadCart()
+        }
     }
 
     fun addToCart(product: ProductModel) {
