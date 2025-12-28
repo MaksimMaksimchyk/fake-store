@@ -1,5 +1,6 @@
 package com.example.fake_store.data.network
 
+import com.example.fake_store.data.storage.Product
 import com.example.fake_store.domain.ProductModel
 
 fun ProductDTO.toDomainProduct(): ProductModel {
@@ -16,3 +17,4 @@ fun ProductDTO.toDomainProduct(): ProductModel {
 fun ProductModel.toDtoProduct(): ProductDTO {
     return ProductDTO(this.category, this.description, this.id, this.image, this.price, this.title)
 }
+

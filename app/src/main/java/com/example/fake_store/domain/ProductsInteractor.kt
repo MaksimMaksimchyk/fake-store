@@ -13,7 +13,17 @@ class ProductsInteractor @Inject constructor(private val productsRepository: Pro
         productsRepository.createCart(cartDTO)
     }
 
-    fun getProductsFromCart(): List<ProductModel> = productsRepository.getProductsFromCart()
+    suspend fun getProductsFromCart(): List<ProductInCartModel> {
+        return productsRepository.getProductsFromCart()
+    }
+
+    suspend fun addProductToCart(product: ProductModel) {
+        productsRepository.addProductToCart(product)
+    }
+
+    suspend fun removeFromCart(productId: Int) {
+        productsRepository.removeFromCart(productId)
+    }
 
     suspend fun createToken(username: String, password: String): String {
         return productsRepository.createToken(username, password)

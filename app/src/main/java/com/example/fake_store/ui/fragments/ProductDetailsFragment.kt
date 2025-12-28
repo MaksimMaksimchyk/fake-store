@@ -14,8 +14,11 @@ import com.bumptech.glide.Glide
 import com.example.fake_store.databinding.FragmentProductDetailsBinding
 import com.example.fake_store.ui.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.getValue
+
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.fake_store.data.storage.AuthManager
 import com.example.fake_store.data.network.CartDTO
 import com.example.fake_store.data.network.toDtoProduct
+import com.example.fake_store.domain.ProductInCartModel
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.domain.ProductsInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,7 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
     private val _allProducts = MutableStateFlow<List<ProductModel>>(emptyList())
     val allProducts = _allProducts.asStateFlow()
 
-    private val _cartProducts = MutableStateFlow<MutableList<ProductModel>>(mutableListOf())
+    private val _cartProducts = MutableStateFlow<List<ProductInCartModel>>(mutableListOf())
     val cartProducts = _cartProducts.asStateFlow()
     private val _currentDetailsProduct = MutableStateFlow<ProductModel>(
         ProductModel(
@@ -43,6 +44,7 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
 
     init {
         loadProducts()
+        loadCart()
     }
 
     fun loadProducts() {
@@ -53,16 +55,27 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
         }
     }
 
+    fun loadCart() {
+        viewModelScope.launch {
+            val updatedList = withContext(Dispatchers.IO) {
+                productsInteractor.getProductsFromCart()
+            }
+            _cartProducts.value = updatedList
+        }
+    }
+
     fun changeCurrentDetailsProduct(product: ProductModel) {
         _currentDetailsProduct.value = product
     }
 
     fun addToCart(product: ProductModel) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            val updatedList = withContext(Dispatchers.IO) {
                 productsInteractor.createCart(CartDTO(0, 0, listOf(product.toDtoProduct())))
+                productsInteractor.addProductToCart(product)
+                productsInteractor.getProductsFromCart()
             }
-            _cartProducts.value.addAll(productsInteractor.getProductsFromCart())
+            _cartProducts.value = updatedList
         }
     }
 

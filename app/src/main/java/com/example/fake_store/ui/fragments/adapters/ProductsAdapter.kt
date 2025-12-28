@@ -1,6 +1,5 @@
-package com.example.fake_store.ui.fragments.adapter
+package com.example.fake_store.ui.fragments.adapters
 
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

@@ -1,4 +1,4 @@
-package com.example.fake_store.ui.fragments.adapter
+package com.example.fake_store.ui.fragments.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.fake_store.domain.ProductModel
