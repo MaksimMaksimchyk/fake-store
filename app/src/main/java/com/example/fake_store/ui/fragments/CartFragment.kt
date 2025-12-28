@@ -66,6 +66,8 @@ class CartFragment : Fragment() {
         }
     }
 
-    private fun onProductClick(product: ProductInCartModel) {}
+    private fun onProductClick(productInCart: ProductInCartModel) {
+        viewModel.removeFromCart(productInCart.product.id)
+    }
 
 }

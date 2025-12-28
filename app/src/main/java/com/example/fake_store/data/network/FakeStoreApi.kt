@@ -1,5 +1,6 @@
 package com.example.fake_store.data.network
 
+import androidx.room.Delete
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,5 +18,7 @@ interface FakeStoreApi {
 
     @POST("auth/login")
     suspend fun createToken(@Body user: UserDTO): TokenDTO
+
+
 
 }

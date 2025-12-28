@@ -92,5 +92,10 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
         _currentToken.value = token
     }
 
-
+    fun removeFromCart(productId: Int) {
+        viewModelScope.launch {
+            productsInteractor.removeFromCart(productId)
+            loadCart()
+        }
+    }
 }

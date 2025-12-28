@@ -43,6 +43,7 @@ class ProductsInCartAdapter(private val onProductClick: (ProductInCartModel) -> 
             Glide.with(binding.productImage).load(productInCart.product.image)
                 .into(binding.productImage)
             binding.productQuantity.text = "Quantity: " + productInCart.quantity.toString()
+            binding.deleteButton.setOnClickListener { onProductClick(productInCart) }
         }
 
     }

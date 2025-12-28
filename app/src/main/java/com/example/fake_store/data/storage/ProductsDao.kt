@@ -33,11 +33,11 @@ interface ProductsDao {
     }
 
     @Transaction
-    @Query("SELECT * FROM products")
+    @Query("""
+    SELECT * FROM products 
+    WHERE productId IN (SELECT productId FROM cart_items)
+""")
     fun getProductsWithCart(): List<ProductInCart>
-
-    @Delete
-    suspend fun deleteCartItem(cartItem: CartItem)
 
     @Query("DELETE FROM cart_items WHERE productId = :id")
     suspend fun deleteCartItemById(id: Int)
