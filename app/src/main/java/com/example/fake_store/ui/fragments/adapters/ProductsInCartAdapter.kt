@@ -2,13 +2,10 @@ package com.example.fake_store.ui.fragments.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.fake_store.databinding.ItemProductBinding
 import com.example.fake_store.databinding.ItemProductInCartBinding
 import com.example.fake_store.domain.ProductInCartModel
-import com.example.fake_store.domain.ProductModel
 
 class ProductsInCartAdapter(private val onProductClick: (ProductInCartModel) -> Unit) :
     RecyclerView.Adapter<ProductsInCartAdapter.ProductViewHolder>() {

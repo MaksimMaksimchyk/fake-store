@@ -1,10 +1,10 @@
 package com.example.fake_store.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,11 +12,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.fake_store.data.storage.AuthManager
 import com.example.fake_store.databinding.FragmentProfileBinding
 import com.example.fake_store.ui.MainActivityViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
-@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
