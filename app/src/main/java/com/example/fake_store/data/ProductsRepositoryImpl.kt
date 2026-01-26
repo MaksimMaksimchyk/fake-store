@@ -1,6 +1,10 @@
 package com.example.fake_store.data
 
+import com.example.fake_store.dagger2.BYNConverterApi
+import com.example.fake_store.dagger2.BaseFakeStoreApi
 import com.example.fake_store.data.network.CartDTO
+import com.example.fake_store.data.network.CurrencyApi
+import com.example.fake_store.data.network.CurrencyRateDTO
 import com.example.fake_store.data.network.FakeStoreApi
 import com.example.fake_store.data.network.UserDTO
 import com.example.fake_store.data.network.toDomainProduct
@@ -16,7 +20,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ProductsRepositoryImpl @Inject constructor(
-    private val api: FakeStoreApi,
+    @BaseFakeStoreApi private val api: FakeStoreApi,
+    @BYNConverterApi private val currencyApi: CurrencyApi,
     private val dao: ProductsDao
 ) : ProductsRepository {
 
@@ -69,5 +74,8 @@ class ProductsRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getCurrencyRate(currencyId: Int): CurrencyRateDTO {
+        return currencyApi.getCurrencyRate(currencyId)
+    }
 
 }

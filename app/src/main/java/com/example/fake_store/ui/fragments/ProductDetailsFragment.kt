@@ -49,7 +49,8 @@ class ProductDetailsFragment : Fragment() {
                     Glide.with(binding.productImage).load(currentProduct.image)
                         .into(binding.productImage)
                     binding.productTitle.text = currentProduct.title
-                    binding.productPrice.text = "$" + currentProduct.price.toString()
+                    binding.productPrice.text =
+                        "$${currentProduct.price} (${"%.2f".format(currentProduct.price * viewModel.currentUsdRate)} BYN)"
                     binding.productDescription.text = currentProduct.description
                 }
             }

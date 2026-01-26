@@ -8,7 +8,10 @@ import com.bumptech.glide.Glide
 import com.example.fake_store.databinding.ItemProductBinding
 import com.example.fake_store.domain.ProductModel
 
-class ProductsAdapter(private val onProductClick: (ProductModel) -> Unit) :
+class ProductsAdapter(
+    private val onProductClick: (ProductModel) -> Unit,
+    private val currentUsdRate: Double
+) :
     RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
     private var products = listOf<ProductModel>()
 
@@ -36,7 +39,8 @@ class ProductsAdapter(private val onProductClick: (ProductModel) -> Unit) :
 
         fun bind(product: ProductModel) {
             binding.productTitle.text = product.title
-            binding.productPrice.text = "$" + product.price.toString()
+            binding.productPrice.text =
+                "$${product.price} (${"%.2f".format(product.price * currentUsdRate)} BYN)"
             Glide.with(binding.productImage).load(product.image).into(binding.productImage)
             binding.productCard.setOnClickListener {
                 onProductClick(product)
