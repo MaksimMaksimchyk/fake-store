@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/catalogFragment"
+    android:id="@+id/nav_graph">
+    <fragment
+        android:id="@+id/catalogFragment"
+        android:name="com.example.fake_store.ui.fragments.CatalogFragment"
+        android:label="fragment_catalog"
+        tools:layout="@layout/fragment_catalog" >
+        <action
+            android:id="@+id/action_catalogFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.example.fake_store.ui.fragments.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.fake_store.ui.fragments.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cartFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.fake_store.ui.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

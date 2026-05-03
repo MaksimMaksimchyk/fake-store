@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -28,14 +29,20 @@ android {
             )
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
+
 }
+
 
 dependencies {
     implementation(libs.androidx.core.ktx)
@@ -46,4 +53,28 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+    androidTestImplementation(libs.androidx.navigation.testing)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    // Moshi Converter
+    implementation(libs.converter.moshi)
+    // Moshi
+    implementation(libs.moshi.kotlin)
+    // Glide
+    implementation(libs.glide)
+    ksp(libs.ksp)
+    //Logging
+    implementation(libs.logging.interceptor)
+    //ROOM
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    //Dagger2
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
 }
