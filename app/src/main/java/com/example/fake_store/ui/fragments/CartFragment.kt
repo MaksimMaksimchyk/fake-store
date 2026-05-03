@@ -1,31 +1,26 @@
 package com.example.fake_store.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fake_store.R
-import com.example.fake_store.data.RetrofitClient
 import com.example.fake_store.databinding.FragmentCartBinding
-import com.example.fake_store.domain.ProductModel
+import com.example.fake_store.domain.ProductInCartModel
 import com.example.fake_store.ui.MainActivityViewModel
-import com.example.fake_store.ui.fragments.adapter.ProductsAdapter
+import com.example.fake_store.ui.fragments.adapters.ProductsInCartAdapter
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 class CartFragment : Fragment() {
 
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: ProductsAdapter
+    private lateinit var adapter: ProductsInCartAdapter
     private val viewModel: MainActivityViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -48,7 +43,7 @@ class CartFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductsAdapter(this::onProductClick)
+        adapter = ProductsInCartAdapter(this::onProductClick, viewModel.currentUsdRate)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -66,13 +61,8 @@ class CartFragment : Fragment() {
         }
     }
 
-    private fun onProductClick(product: ProductModel) {
-        Toast.makeText(
-            requireContext(),
-            "Id корзины: ${RetrofitClient.currentCartDTO.id}, id пользователя: ${RetrofitClient.currentCartDTO.userid}",
-            Toast.LENGTH_SHORT
-        )
-            .show()
+    private fun onProductClick(productInCart: ProductInCartModel) {
+        viewModel.removeFromCart(productInCart.product.id)
     }
 
 }

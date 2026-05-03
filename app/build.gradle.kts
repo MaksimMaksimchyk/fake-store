@@ -60,12 +60,21 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.testing)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation(libs.retrofit)
     // Moshi Converter
-    implementation("com.squareup.retrofit2:converter-moshi:3.0.0")
+    implementation(libs.converter.moshi)
     // Moshi
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.2")
+    implementation(libs.moshi.kotlin)
     // Glide
-    implementation("com.github.bumptech.glide:glide:5.0.5")
-    ksp("com.github.bumptech.glide:ksp:5.0.5")
+    implementation(libs.glide)
+    ksp(libs.ksp)
+    //Logging
+    implementation(libs.logging.interceptor)
+    //ROOM
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    //Dagger2
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
 }
