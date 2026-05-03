@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fake_store.data.network.CartDTO
+import com.example.fake_store.data.network.CurrencyRateDTO
 import com.example.fake_store.data.network.toDtoProduct
 import com.example.fake_store.data.storage.AuthManager
 import com.example.fake_store.domain.ProductInCartModel
@@ -21,6 +22,7 @@ import javax.inject.Provider
 class MainActivityViewModel @Inject constructor(val productsInteractor: ProductsInteractor) :
     ViewModel() {
 
+    var currentUsdRate: Double = 0.0
     private val _allProducts = MutableStateFlow<List<ProductModel>>(emptyList())
     val allProducts = _allProducts.asStateFlow()
 
@@ -45,12 +47,22 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
     init {
         loadProducts()
         loadCart()
+        updateCurrencyRate()
     }
 
     fun loadProducts() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _allProducts.value = productsInteractor.getProducts()
+            }
+        }
+    }
+
+    fun updateCurrencyRate() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                currentUsdRate =
+                    productsInteractor.getCurrencyRate(CurrencyRateDTO.USD_TO_BYN_ID).Cur_OfficialRate
             }
         }
     }

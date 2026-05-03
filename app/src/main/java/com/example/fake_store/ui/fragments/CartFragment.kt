@@ -43,7 +43,7 @@ class CartFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductsInCartAdapter(this::onProductClick)
+        adapter = ProductsInCartAdapter(this::onProductClick, viewModel.currentUsdRate)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 

@@ -1,6 +1,7 @@
 package com.example.fake_store.domain
 
 import com.example.fake_store.data.network.CartDTO
+import com.example.fake_store.data.network.CurrencyRateDTO
 import javax.inject.Inject
 
 class ProductsInteractor @Inject constructor(private val productsRepository: ProductsRepository) {
@@ -31,5 +32,9 @@ class ProductsInteractor @Inject constructor(private val productsRepository: Pro
 
     suspend fun updateProductPrice(product: ProductModel, newPrice: Double) {
         productsRepository.updateProductPrice(product, newPrice)
+    }
+
+    suspend fun getCurrencyRate(currencyId: Int): CurrencyRateDTO {
+        return productsRepository.getCurrencyRate(currencyId)
     }
 }

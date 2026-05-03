@@ -56,7 +56,7 @@ class CatalogFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductsAdapter(this::onProductClick)
+        adapter = ProductsAdapter(this::onProductClick, viewModel.currentUsdRate)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
