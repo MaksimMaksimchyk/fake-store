@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -61,17 +60,21 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.testing)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation(libs.retrofit)
     // Moshi Converter
-    implementation("com.squareup.retrofit2:converter-moshi:3.0.0")
+    implementation(libs.converter.moshi)
     // Moshi
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.2")
+    implementation(libs.moshi.kotlin)
     // Glide
-    implementation("com.github.bumptech.glide:glide:5.0.5")
-    ksp("com.github.bumptech.glide:ksp:5.0.5")
-    //Hilt
-    implementation("com.google.dagger:hilt-android:2.57.1")
-    ksp("com.google.dagger:hilt-android-compiler:2.57.1")
+    implementation(libs.glide)
+    ksp(libs.ksp)
     //Logging
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation(libs.logging.interceptor)
+    //ROOM
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    //Dagger2
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
 }
