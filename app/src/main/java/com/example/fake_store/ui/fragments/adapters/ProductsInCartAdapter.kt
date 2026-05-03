@@ -2,15 +2,15 @@ package com.example.fake_store.ui.fragments.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.fake_store.databinding.ItemProductBinding
 import com.example.fake_store.databinding.ItemProductInCartBinding
 import com.example.fake_store.domain.ProductInCartModel
-import com.example.fake_store.domain.ProductModel
 
-class ProductsInCartAdapter(private val onProductClick: (ProductInCartModel) -> Unit) :
+class ProductsInCartAdapter(
+    private val onProductClick: (ProductInCartModel) -> Unit,
+    private val currentUsdRate: Double
+) :
     RecyclerView.Adapter<ProductsInCartAdapter.ProductViewHolder>() {
     private var products = listOf<ProductInCartModel>()
 
@@ -39,7 +39,8 @@ class ProductsInCartAdapter(private val onProductClick: (ProductInCartModel) -> 
 
         fun bind(productInCart: ProductInCartModel) {
             binding.productTitle.text = productInCart.product.title
-            binding.productPrice.text = "$" + productInCart.product.price.toString()
+            binding.productPrice.text =
+                "$${productInCart.product.price} (${"%.2f".format(productInCart.product.price * currentUsdRate)} BYN)"
             Glide.with(binding.productImage).load(productInCart.product.image)
                 .into(binding.productImage)
             binding.productQuantity.text = "Quantity: " + productInCart.quantity.toString()

@@ -1,6 +1,5 @@
 package com.example.fake_store.data.network
 
-import com.example.fake_store.data.storage.Product
 import com.example.fake_store.domain.ProductModel
 
 fun ProductDTO.toDomainProduct(): ProductModel {

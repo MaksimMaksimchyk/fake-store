@@ -2,26 +2,27 @@ package com.example.fake_store.ui
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.fake_store.data.storage.AuthManager
 import com.example.fake_store.data.network.CartDTO
+import com.example.fake_store.data.network.CurrencyRateDTO
 import com.example.fake_store.data.network.toDtoProduct
+import com.example.fake_store.data.storage.AuthManager
 import com.example.fake_store.domain.ProductInCartModel
 import com.example.fake_store.domain.ProductModel
 import com.example.fake_store.domain.ProductsInteractor
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Provider
 
-@HiltViewModel
 class MainActivityViewModel @Inject constructor(val productsInteractor: ProductsInteractor) :
     ViewModel() {
 
+    var currentUsdRate: Double = 0.0
     private val _allProducts = MutableStateFlow<List<ProductModel>>(emptyList())
     val allProducts = _allProducts.asStateFlow()
 
@@ -46,12 +47,22 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
     init {
         loadProducts()
         loadCart()
+        updateCurrencyRate()
     }
 
     fun loadProducts() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _allProducts.value = productsInteractor.getProducts()
+            }
+        }
+    }
+
+    fun updateCurrencyRate() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                currentUsdRate =
+                    productsInteractor.getCurrencyRate(CurrencyRateDTO.USD_TO_BYN_ID).Cur_OfficialRate
             }
         }
     }
@@ -106,5 +117,13 @@ class MainActivityViewModel @Inject constructor(val productsInteractor: Products
             productsInteractor.removeFromCart(productId)
             loadCart()
         }
+    }
+}
+
+class MainActivityViewModelFactory @Inject constructor(
+    private val myViewModelProvider: Provider<MainActivityViewModel>
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return myViewModelProvider.get() as T
     }
 }
